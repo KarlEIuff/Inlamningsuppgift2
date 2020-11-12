@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Inlamning_2_ra_kod
 {
+
+    /* CLASS: Person
+     * PURPOSE: Used as an object for personal information, loaded into a list of persons
+     */
     class Person
     {
         public string name, address, phone, email;
@@ -14,6 +18,11 @@ namespace Inlamning_2_ra_kod
         {
             name = N; address = A; phone = T; email = E;
         }
+
+        /* CONSTRUCTOR: Person (public)
+         * PURPOSE: Asks the user for data and inserts them into the new person's information
+         * PARAMETERS: None
+         */
         public Person()
         {
             Console.Write("  1. ange namn:    ");
@@ -25,10 +34,23 @@ namespace Inlamning_2_ra_kod
             Console.Write("  4. ange email:   ");
             email = Console.ReadLine();
         }
+
+        /* METHOD: Print (public)
+         * PURPOSE: Used to print the personal information of the current person
+         * PARAMETERS: None
+         * RETURN VALUE: None
+         */
         public void Print()
         {
             Console.WriteLine(name + ", " + address + ", " + phone + ", " + email);
         }
+
+        /* METHOD: ModifyPerson (public)
+         * PURPOSE: Inserts a new value into the current person's data
+         * PARAMETERS: string field - The field to have the new value inserted into
+         *             string value - The new value to be inserted
+         * RETURN VALUE: None
+         */
         public void ModifyPerson(string field, string value)
         {
             switch (field)
@@ -93,6 +115,12 @@ namespace Inlamning_2_ra_kod
                 }
             } while (command != "sluta");
         }
+
+        /* METHOD: Load (static)
+         * PURPOSE: Loads data from a file and adds it into a list
+         * PARAMETERS: None
+         * RETURN VALUE: List<Person> Dict - List with the data loaded from the file
+         */
         static List<Person> Load()
         {
 
@@ -114,18 +142,24 @@ namespace Inlamning_2_ra_kod
 
             return Dict;
         }
+
+        /* METHOD: RemovePerson (static)
+         * PURPOSE: Removes a person from the list
+         * PARAMETERS: List<Person> Dict - The list with the person to be removed from
+         * RETURN VALUE: List<Person> Dict - The updated list
+         */
         static List<Person> RemovePerson(List<Person> Dict)
         {
             Console.Write("Vem vill du ta bort (ange namn): ");
-            string villTaBort = Console.ReadLine();
+            string toBeRemoved = Console.ReadLine();
             int found = -1;
             for (int i = 0; i < Dict.Count(); i++)
             {
-                if (Dict[i].name == villTaBort) found = i;
+                if (Dict[i].name == toBeRemoved) found = i;
             }
             if (found == -1)
             {
-                Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", villTaBort);
+                Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", toBeRemoved);
             }
             else
             {
@@ -133,26 +167,32 @@ namespace Inlamning_2_ra_kod
             }
             return Dict;
         }
+
+        /* METHOD: Modify
+         * PURPOSE: Changes the value of a person's info
+         * PARAMETERS: List<Person> Dict - The list with the person to be modified
+         * RETURN VALUE: List<Person> Dict - The updated list
+         */
         static List<Person> Modify(List<Person> Dict)
         {
             Console.Write("Vem vill du ändra (ange namn): ");
-            string villÄndra = Console.ReadLine();
+            string toBeChanged = Console.ReadLine();
             int found = -1;
             for (int i = 0; i < Dict.Count(); i++)
             {
-                if (Dict[i].name == villÄndra) found = i;
+                if (Dict[i].name == toBeChanged) found = i;
             }
             if (found == -1)
             {
-                Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", villÄndra);
+                Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", toBeChanged);
             }
             else
             {
                 Console.Write("Vad vill du ändra (namn, adress, telefon eller email): ");
-                string fältAttÄndra = Console.ReadLine();
-                Console.Write("Vad vill du ändra {0} på {1} till: ", fältAttÄndra, villÄndra);
-                string nyttVärde = Console.ReadLine();
-                Dict[found].ModifyPerson(fältAttÄndra, nyttVärde);
+                string fieldToChange = Console.ReadLine();
+                Console.Write("Vad vill du ändra {0} på {1} till: ", fieldToChange, toBeChanged);
+                string newValue = Console.ReadLine();
+                Dict[found].ModifyPerson(fieldToChange, newValue);
             }
             return Dict;
         }
